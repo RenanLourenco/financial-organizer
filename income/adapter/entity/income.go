@@ -1,4 +1,4 @@
-package entities
+package income
 
 import (
 	"time"

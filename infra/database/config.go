@@ -5,7 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/RenanLourenco/financial-organizer/entities"
+	expenses "github.com/RenanLourenco/financial-organizer/expenses/adapter/entity"
+	income "github.com/RenanLourenco/financial-organizer/income/adapter/entity"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -41,7 +42,7 @@ func ConnectDatabase(){
 		panic(err.Error())
 	}
 	fmt.Println("Database connected!")
-	DB.AutoMigrate(&entities.Expenses{},&entities.Income{})
+	DB.AutoMigrate(&expenses.Expenses{},&income.Income{})
 }
 
 
