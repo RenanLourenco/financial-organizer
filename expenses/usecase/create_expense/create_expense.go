@@ -3,6 +3,7 @@ package create_expense
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	expenses "github.com/RenanLourenco/financial-organizer/expenses/adapter/entity"
 	"gorm.io/gorm"
@@ -21,13 +22,23 @@ func (c *CreateExpense) Execute(input CreateExpenseDtoInput) (CreateExpenseDtoOu
 	expense.Date = input.Date
 
 	
-	
 	c.Repository.Where(&expenses.Expenses{Description: expense.Description}).First(&find)
 
 	fmt.Println(find.ID)
 
 	if find.ID != 0 {
-		return CreateExpenseDtoOutput{},errors.New("Expense already created")
+		dateString := find.Date
+		date, _ := time.Parse(time.RFC3339Nano, dateString)
+		month := date.Month()
+
+		inputDate, _ := time.Parse(time.RFC3339Nano, expense.Date)
+
+		inputMonth := inputDate.Month()
+
+		if month == inputMonth {
+			return CreateExpenseDtoOutput{},errors.New("Expense already exists.")
+		}
+
 	}
 
 

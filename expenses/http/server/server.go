@@ -8,4 +8,5 @@ import (
 
 func SetupRoutes(r *gin.Engine){
 	r.POST("/expenses",controller.CreateExpense)
+	r.DELETE("/expenses/:id",controller.DeleteExpense)
 }

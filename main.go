@@ -1,7 +1,7 @@
 package main
 
 import (
-	expenses_routes "github.com/RenanLourenco/financial-organizer/api/expenses"
+	expenses_routes "github.com/RenanLourenco/financial-organizer/expenses/http/server"
 	"github.com/RenanLourenco/financial-organizer/infra/database"
 	"github.com/gin-gonic/gin"
 )

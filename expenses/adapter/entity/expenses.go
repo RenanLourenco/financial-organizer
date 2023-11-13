@@ -1,8 +1,6 @@
 package expenses
 
 import (
-
-
 	"gopkg.in/validator.v2"
 	"gorm.io/gorm"
 )
