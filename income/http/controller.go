@@ -5,6 +5,7 @@ import (
 
 	"github.com/RenanLourenco/financial-organizer/income/usecase/create_income"
 	"github.com/RenanLourenco/financial-organizer/income/usecase/delete_income"
+	"github.com/RenanLourenco/financial-organizer/income/usecase/get_income"
 	"github.com/RenanLourenco/financial-organizer/infra/database"
 	"github.com/gin-gonic/gin"
 )
@@ -64,4 +65,36 @@ func DeleteIncome(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, output)
+}
+
+
+func GetIncome(c *gin.Context) {
+	usecase := get_income.GetIncome {
+		Repository: database.DB,
+	}
+
+	id := c.Params.ByName("id")
+
+	if id == "" {
+		c.JSON( http.StatusBadRequest, gin.H{
+			"msg": "Error missing ID.",
+		})
+		return
+	}
+
+	input := get_income.GetIncomeInput{
+		ID:id,
+	}
+
+	output, err := usecase.Execute(input)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"msg": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, output)
+
 }
