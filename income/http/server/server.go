@@ -11,4 +11,5 @@ func SetupRoutes(r *gin.Engine) {
 	r.DELETE("/incomes/:id",controller.DeleteIncome)
 	r.GET("/incomes/:id",controller.GetIncome)
 	r.GET("/incomes",controller.ListIncomes)
+	r.PUT("/incomes/:id",controller.UpdateIncome)
 }
