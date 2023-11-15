@@ -6,21 +6,22 @@ import (
 	expenses "github.com/RenanLourenco/financial-organizer/expenses/adapter/entity"
 	"github.com/RenanLourenco/financial-organizer/expenses/usecase/create_expense"
 	"github.com/RenanLourenco/financial-organizer/expenses/usecase/delete_expense"
+	"github.com/RenanLourenco/financial-organizer/expenses/usecase/get_expense"
+	"github.com/RenanLourenco/financial-organizer/expenses/usecase/list_expenses"
 	"github.com/RenanLourenco/financial-organizer/expenses/usecase/update_expense"
 	"github.com/RenanLourenco/financial-organizer/infra/database"
 	"github.com/gin-gonic/gin"
 )
 
-
-func CreateExpense(c *gin.Context){
+func CreateExpense(c *gin.Context) {
 	usecase := create_expense.CreateExpense{
 		Repository: database.DB,
 	}
 	var input create_expense.CreateExpenseDtoInput
 
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest,gin.H{
-			"error":err.Error(),
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
 		})
 		return
 	}
@@ -29,15 +30,15 @@ func CreateExpense(c *gin.Context){
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"msg":err.Error(),
+			"msg": err.Error(),
 		})
 		return
 	}
 
-	c.JSON(http.StatusCreated,output)
+	c.JSON(http.StatusCreated, output)
 }
 
-func DeleteExpense(c *gin.Context){
+func DeleteExpense(c *gin.Context) {
 	usecase := delete_expense.DeleteExpense{
 		Repository: database.DB,
 	}
@@ -46,7 +47,7 @@ func DeleteExpense(c *gin.Context){
 
 	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"msg":"Id missing in query params.",
+			"msg": "Id missing in query params.",
 		})
 		return
 	}
@@ -59,15 +60,15 @@ func DeleteExpense(c *gin.Context){
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"msg":err.Error(),
+			"msg": err.Error(),
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK,output)
+	c.JSON(http.StatusOK, output)
 }
 
-func UpdateExpense(c *gin.Context){
+func UpdateExpense(c *gin.Context) {
 	usecase := update_expense.UpdateExpense{
 		Repository: database.DB,
 	}
@@ -76,7 +77,7 @@ func UpdateExpense(c *gin.Context){
 
 	if err := c.ShouldBindJSON(&expense); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"msg":err.Error(),
+			"msg": err.Error(),
 		})
 		return
 	}
@@ -85,13 +86,13 @@ func UpdateExpense(c *gin.Context){
 
 	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"msg":"Id missing in query params.",
+			"msg": "Id missing in query params.",
 		})
 		return
 	}
 
 	input := update_expense.UpdateExpenseInput{
-		ID: id,
+		ID:             id,
 		UpdatedExpense: expense,
 	}
 
@@ -99,11 +100,59 @@ func UpdateExpense(c *gin.Context){
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"msg":err.Error(),
+			"msg": err.Error(),
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK,output)
+	c.JSON(http.StatusOK, output)
 
+}
+
+func GetExpense(c *gin.Context) {
+	usecase := get_expense.GetExpense{
+		Repository: database.DB,
+	}
+
+	id := c.Params.ByName("id")
+
+	if id == "" {
+		c.JSON( http.StatusBadRequest, gin.H{
+			"msg": "Error missing ID.",
+		})
+		return
+	}
+
+	input := get_expense.GetExpenseInput{
+		ID: id,
+	}
+
+	output, err := usecase.Execute(input)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"msg": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, output)
+
+}
+
+func ListExpenses(c *gin.Context){
+	usecase := list_expenses.ListExpense{
+		Repository: database.DB,
+	}
+
+	output, err := usecase.Execute()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"msg": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, output.Data)
 }
