@@ -1,7 +1,7 @@
 package delete_expense
 
 import (
-	expenses "github.com/RenanLourenco/financial-organizer/expenses/adapter/entity"
+	"github.com/RenanLourenco/financial-organizer/expense/adapter/entity"
 	"gorm.io/gorm"
 )
 
@@ -12,7 +12,7 @@ type DeleteExpense struct {
 
 
 func (c *DeleteExpense) Execute(input DeleteExpenseInput) (DeleteExpenseOutput, error) {
-	var expense expenses.Expenses
+	var expense entity.Expense
 
 	c.Repository.Delete(&expense, input.ID)
 

@@ -1,7 +1,8 @@
 package main
 
 import (
-	expenses_routes "github.com/RenanLourenco/financial-organizer/expenses/http/server"
+	expense_routes "github.com/RenanLourenco/financial-organizer/expense/http/server"
+	income_routes "github.com/RenanLourenco/financial-organizer/income/http/server"
 	"github.com/RenanLourenco/financial-organizer/infra/database"
 	"github.com/gin-gonic/gin"
 )
@@ -10,7 +11,8 @@ import (
 func main(){
 	database.ConnectDatabase()
 	r := gin.Default()
-	expenses_routes.SetupRoutes(r)
+	expense_routes.SetupRoutes(r)
+	income_routes.SetupRoutes(r)
 
 	r.Run(":5000")
 }

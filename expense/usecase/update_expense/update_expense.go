@@ -3,7 +3,7 @@ package update_expense
 import (
 	"errors"
 
-	expenses "github.com/RenanLourenco/financial-organizer/expenses/adapter/entity"
+	"github.com/RenanLourenco/financial-organizer/expense/adapter/entity"
 	"gorm.io/gorm"
 )
 
@@ -13,7 +13,7 @@ type UpdateExpense struct {
 }
 
 func (c *UpdateExpense) Execute(input UpdateExpenseInput) (UpdateExpenseOutput, error) {
-	var expense expenses.Expenses
+	var expense entity.Expense
 	c.Repository.First(&expense, input.ID)
 
 	if expense.ID == 0 {

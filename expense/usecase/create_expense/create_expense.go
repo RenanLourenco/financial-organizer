@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	expenses "github.com/RenanLourenco/financial-organizer/expenses/adapter/entity"
+	"github.com/RenanLourenco/financial-organizer/expense/adapter/entity"
 	"gorm.io/gorm"
 )
 
@@ -14,15 +14,15 @@ type CreateExpense struct {
 }
 
 func (c *CreateExpense) Execute(input CreateExpenseDtoInput) (CreateExpenseDtoOutput, error){
-	var expense expenses.Expenses
-	var find expenses.Expenses
+	var expense entity.Expense
+	var find entity.Expense
 
 	expense.Description = input.Description
 	expense.Value = input.Value
 	expense.Date = input.Date
 
 	
-	c.Repository.Where(&expenses.Expenses{Description: expense.Description}).First(&find)
+	c.Repository.Where(&entity.Expense{Description: expense.Description}).First(&find)
 
 	fmt.Println(find.ID)
 

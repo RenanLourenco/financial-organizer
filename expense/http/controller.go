@@ -3,12 +3,12 @@ package controller
 import (
 	"net/http"
 
-	expenses "github.com/RenanLourenco/financial-organizer/expenses/adapter/entity"
-	"github.com/RenanLourenco/financial-organizer/expenses/usecase/create_expense"
-	"github.com/RenanLourenco/financial-organizer/expenses/usecase/delete_expense"
-	"github.com/RenanLourenco/financial-organizer/expenses/usecase/get_expense"
-	"github.com/RenanLourenco/financial-organizer/expenses/usecase/list_expenses"
-	"github.com/RenanLourenco/financial-organizer/expenses/usecase/update_expense"
+	"github.com/RenanLourenco/financial-organizer/expense/adapter/entity"
+	"github.com/RenanLourenco/financial-organizer/expense/usecase/create_expense"
+	"github.com/RenanLourenco/financial-organizer/expense/usecase/delete_expense"
+	"github.com/RenanLourenco/financial-organizer/expense/usecase/get_expense"
+	"github.com/RenanLourenco/financial-organizer/expense/usecase/list_expenses"
+	"github.com/RenanLourenco/financial-organizer/expense/usecase/update_expense"
 	"github.com/RenanLourenco/financial-organizer/infra/database"
 	"github.com/gin-gonic/gin"
 )
@@ -73,7 +73,7 @@ func UpdateExpense(c *gin.Context) {
 		Repository: database.DB,
 	}
 
-	var expense expenses.Expenses
+	var expense entity.Expense
 
 	if err := c.ShouldBindJSON(&expense); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{

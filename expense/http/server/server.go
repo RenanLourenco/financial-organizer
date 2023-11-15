@@ -1,7 +1,7 @@
 package expenses_routes
 
 import (
-	controller "github.com/RenanLourenco/financial-organizer/expenses/http"
+	controller "github.com/RenanLourenco/financial-organizer/expense/http"
 	"github.com/gin-gonic/gin"
 )
 

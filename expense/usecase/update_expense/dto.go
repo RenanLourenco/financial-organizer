@@ -1,13 +1,13 @@
 package update_expense
 
 import (
-	expenses "github.com/RenanLourenco/financial-organizer/expenses/adapter/entity"
+	"github.com/RenanLourenco/financial-organizer/expense/adapter/entity"
 	"gorm.io/gorm"
 )
 
 type UpdateExpenseInput struct {
 	ID string `json:"id"`
-	UpdatedExpense expenses.Expenses
+	UpdatedExpense entity.Expense
 }
 
 type UpdateExpenseOutput struct {

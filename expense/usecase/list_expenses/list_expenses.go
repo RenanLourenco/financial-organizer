@@ -1,7 +1,7 @@
 package list_expenses
 
 import (
-	expenses "github.com/RenanLourenco/financial-organizer/expenses/adapter/entity"
+	"github.com/RenanLourenco/financial-organizer/expense/adapter/entity"
 	"gorm.io/gorm"
 )
 
@@ -12,7 +12,7 @@ type ListExpense struct{
 
 
 func (c *ListExpense) Execute() (ListExpenseOutput, error) {
-	var expenses []expenses.Expenses
+	var expenses []entity.Expense
 
 	c.Repository.Find(&expenses)
 

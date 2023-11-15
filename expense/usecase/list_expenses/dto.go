@@ -1,7 +1,7 @@
 package list_expenses
 
 import (
-	expenses "github.com/RenanLourenco/financial-organizer/expenses/adapter/entity"
+	"github.com/RenanLourenco/financial-organizer/expense/adapter/entity"
 )
 
 type ListExpenseInput struct {
@@ -9,5 +9,5 @@ type ListExpenseInput struct {
 }
 
 type ListExpenseOutput struct {
-	Data []expenses.Expenses
+	Data []entity.Expense
 }

@@ -3,7 +3,7 @@ package get_expense
 import (
 	"errors"
 
-	expenses "github.com/RenanLourenco/financial-organizer/expenses/adapter/entity"
+	"github.com/RenanLourenco/financial-organizer/expense/adapter/entity"
 	"gorm.io/gorm"
 )
 
@@ -12,7 +12,7 @@ type GetExpense struct {
 }
 
 func (c *GetExpense) Execute (input GetExpenseInput) (GetExpenseOutput, error) {
-	var expense expenses.Expenses
+	var expense entity.Expense
 	c.Repository.First(&expense, input.ID)
 
 	if expense.ID == 0 {
