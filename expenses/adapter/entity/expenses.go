@@ -12,8 +12,8 @@ type Expenses struct {
 	Date string `json:"date"`
 }
 
-func ValidateExpense(expense *Expenses) error{
-	if err := validator.Validate(expense); err != nil {
+func (e *Expenses) ValidateExpense() error{
+	if err := validator.Validate(e); err != nil {
 		return err
 	}
 	return nil
