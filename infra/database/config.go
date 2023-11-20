@@ -28,9 +28,9 @@ func loadEnviromentVariables(){
 }
 
 func ConnectDatabase(){
-	err := godotenv.Load()
+	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		error := godotenv.Load("../.env"); if error != nil { log.Fatalln(error.Error())}
 	}
 
 	loadEnviromentVariables()
