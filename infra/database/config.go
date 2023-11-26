@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-
+	category "github.com/RenanLourenco/financial-organizer/categories/adapter/entity"
 	expense "github.com/RenanLourenco/financial-organizer/expense/adapter/entity"
 	income "github.com/RenanLourenco/financial-organizer/income/adapter/entity"
 	"github.com/joho/godotenv"
@@ -42,7 +42,7 @@ func ConnectDatabase(){
 		panic(err.Error())
 	}
 	fmt.Println("Database connected!")
-	DB.AutoMigrate(&expense.Expense{},&income.Income{})
+	DB.AutoMigrate(&expense.Expense{},&income.Income{}, &category.Category{})
 }
 
 

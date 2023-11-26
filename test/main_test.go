@@ -410,7 +410,4 @@ func TestDeleteIncome(t *testing.T){
 	json.Unmarshal(resp.Body.Bytes(), &response)
 
 	assert.Equal(t, response.Msg, "Income Deleted.")
-
-
-
 }

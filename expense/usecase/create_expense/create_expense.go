@@ -4,27 +4,37 @@ import (
 	"errors"
 	"fmt"
 	"time"
-
+	category "github.com/RenanLourenco/financial-organizer/categories/service"
 	"github.com/RenanLourenco/financial-organizer/expense/adapter/entity"
 	"gorm.io/gorm"
 )
 
 type CreateExpense struct {
 	Repository *gorm.DB
+	CategoryService *category.CategoryService
 }
 
 func (c *CreateExpense) Execute(input CreateExpenseDtoInput) (CreateExpenseDtoOutput, error){
 	var expense entity.Expense
 	var find entity.Expense
 
+	if input.Category == "" {
+		input.Category = "Others"
+	}
+
+	category, err := c.CategoryService.Categorize(input.Category)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	expense.Description = input.Description
 	expense.Value = input.Value
 	expense.Date = input.Date
+	expense.CategoryID = category.ID
 
 	
 	c.Repository.Where(&entity.Expense{Description: expense.Description}).First(&find)
-
-	fmt.Println(find.ID)
 
 	if find.ID != 0 {
 		dateString := find.Date
@@ -46,6 +56,7 @@ func (c *CreateExpense) Execute(input CreateExpenseDtoInput) (CreateExpenseDtoOu
 
 	output := CreateExpenseDtoOutput{}
 	output.ID = expense.ID
+	output.Category = category
 	output.Description = expense.Description
 	output.Date = expense.Date
 	output.Value = expense.Value

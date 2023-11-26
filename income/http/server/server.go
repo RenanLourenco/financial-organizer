@@ -8,8 +8,9 @@ import (
 
 func SetupRoutes(r *gin.Engine) {
 	r.POST("/incomes", controller.CreateIncome)
-	r.DELETE("/incomes/:id",controller.DeleteIncome)
-	r.GET("/incomes/:id",controller.GetIncome)
+	r.DELETE("/income/:id",controller.DeleteIncome)
+	r.GET("/income/:id",controller.GetIncome)
 	r.GET("/incomes",controller.ListIncomes)
-	r.PUT("/incomes/:id",controller.UpdateIncome)
+	r.PUT("/income/:id",controller.UpdateIncome)
+	r.GET("/incomes/:year/:month",controller.ListIncomeByMonth)
 }
