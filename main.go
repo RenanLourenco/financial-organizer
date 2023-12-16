@@ -12,6 +12,7 @@ import (
 func main(){
 	database.ConnectDatabase()
 	r := gin.Default()
+	gin.SetMode("release")
 	expense_routes.SetupRoutes(r)
 	income_routes.SetupRoutes(r)
 	resume_routes.SetupRoutes(r)

@@ -117,3 +117,11 @@ func (c *CategoryService) Categorize(categoryDescription string) (entity.Categor
 	return category, nil
 }
 
+func (c *CategoryService) ListCategories() []entity.Category{
+	var categories []entity.Category
+
+	c.Repository.Find(&categories)
+
+	return categories
+}
+

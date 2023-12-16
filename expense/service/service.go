@@ -6,6 +6,7 @@ import (
 	"time"
 
 	categoryEntity "github.com/RenanLourenco/financial-organizer/categories/adapter/entity"
+	"github.com/RenanLourenco/financial-organizer/categories/service"
 	"github.com/RenanLourenco/financial-organizer/expense/adapter/entity"
 	"gorm.io/gorm"
 )
@@ -58,20 +59,44 @@ func (c *ExpenseService) ListByMonth(month string, year string) ([]entity.Expens
 func (c *ExpenseService) ListExpenseEachCategoryByMonth(month string, year string) ([]ExpensesByCategory, error){
 	var expenseByCategory []ExpensesByCategory
 
-
-	expenses, err := c.ListByMonth(month,year); if err != nil { return expenseByCategory, errors.New(err.Error()) }
 	
-	for _, expense := range expenses {
-		var category categoryEntity.Category
+	yearInt := 0
+	monthInt := 0
+
+	_, err := fmt.Sscanf(year, "%d", &yearInt)
+	if err != nil {
+		return expenseByCategory, errors.New("Invalid year or month format")
+	}
+	_, err = fmt.Sscanf(month, "%d", &monthInt)
+	if err != nil {
+		return expenseByCategory, errors.New("Invalid year or month format")
+	}
+
+	layout := "2006-01-02T15:04:05"
+	startOfMonth := time.Date(yearInt, time.Month(monthInt), 1, 0, 0, 0, 0, time.UTC)
+	endOfMonth := startOfMonth.AddDate(0, 1, 0).Add(-time.Nanosecond)
+
+
+	categoriesService := service.CategoryService{
+		Repository: c.Repository,
+	}
+
+	categories := categoriesService.ListCategories()
+
+	for _, category := range categories {
 		var categoryMap ExpensesByCategory
+		var expenses []entity.Expense
+		c.Repository.Where("category_id = ? AND date BETWEEN ? AND ?",category.ID,startOfMonth.Format(layout), endOfMonth.Format(layout)).Find(&expenses)
 
-		c.Repository.First(&category, expense.CategoryID)
+		categoryMap.Category = category.Description
+		categoryMap.Value = 0
 
-		categoryMap.Category = category.Description 
-		categoryMap.Value += expense.Value
+		for _, expense := range expenses {
+			fmt.Println(expense.Value)
+			categoryMap.Value += expense.Value
 
+		}
 		expenseByCategory = append(expenseByCategory, categoryMap)
-
 	}
 
 	return expenseByCategory, nil

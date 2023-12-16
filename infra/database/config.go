@@ -15,6 +15,7 @@ import (
 var dbUser string
 var dbPassword string
 var dbName string
+var dbHost string
 
 var (
 	DB *gorm.DB
@@ -25,6 +26,7 @@ func loadEnviromentVariables(){
 	dbUser = os.Getenv("DB_USER")
 	dbPassword = os.Getenv("DB_PASSWORD")
 	dbName = os.Getenv("DB_NAME")
+	dbHost = os.Getenv("DB_HOST")
 }
 
 func ConnectDatabase(){
@@ -35,14 +37,14 @@ func ConnectDatabase(){
 
 	loadEnviromentVariables()
 	
-	dsn := fmt.Sprintf("host=localhost user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=America/Sao_Paulo",dbUser,dbPassword,dbName)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=America/Sao_Paulo",dbHost,dbUser,dbPassword,dbName)
 
 	DB, err = gorm.Open(postgres.Open(dsn))
 	if err != nil {
 		panic(err.Error())
 	}
 	fmt.Println("Database connected!")
-	DB.AutoMigrate(&expense.Expense{},&income.Income{}, &category.Category{})
+	DB.AutoMigrate(&category.Category{},&expense.Expense{},&income.Income{})
 }
 
 
