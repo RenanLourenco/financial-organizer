@@ -9,6 +9,8 @@ type SearchExpense struct {
 	Repository *gorm.DB
 }
 
+
+
 func (c *SearchExpense) Execute(input SearchExpenseInput) SearchExpenseOutput {
 	var expenses []entity.Expense
 

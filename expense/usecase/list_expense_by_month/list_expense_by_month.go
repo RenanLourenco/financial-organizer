@@ -12,6 +12,14 @@ type ListExpenseByMonth struct {
 	Repository *gorm.DB
 }
 
+
+// Execute List expenses by month
+// @Summary List expenses by month
+// @Description List expenses by month
+// @Produce json
+// @Tags Expense
+// @Success 200 {object} ListExpenseByMonthOutput
+// @Router /expenses/:year/:month [get]
 func (c *ListExpenseByMonth) Execute(input ListExpenseByMonthInput) (ListExpenseByMonthOutput, error) {
 	var expenses []entity.Expense
 

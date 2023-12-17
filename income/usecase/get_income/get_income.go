@@ -11,6 +11,12 @@ type GetIncome struct {
 	Repository *gorm.DB
 }
 
+// Execute Get income
+// @Summary Get specific income by id
+// @Description Get specific income by id
+// @Tags Income
+// @Success 200 {object} GetIncomeOutput
+// @Router /income/:id [get]
 func (c *GetIncome) Execute(input GetIncomeInput) (GetIncomeOutput, error){
 	var income entity.Income
 	c.Repository.First(&income,input.ID)

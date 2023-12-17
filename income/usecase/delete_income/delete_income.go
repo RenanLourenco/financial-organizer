@@ -8,7 +8,12 @@ import (
 type DeleteIncome struct {
 	Repository *gorm.DB
 }
-
+// Execute delete income
+// @Summary delete income
+// @Description delete income
+// @Tags Income
+// @Success 200 {object} DeleteIncomeOutput
+// @Router /income/:id [delete]
 func (c *DeleteIncome) Execute(input DeleteIncomeInput) (DeleteIncomeOutput, error) {
 	var income entity.Income
 

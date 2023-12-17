@@ -11,7 +11,13 @@ import (
 type CreateIncome struct {
 	Repository *gorm.DB
 }
-
+// Execute Create a new income
+// @Summary Create a new income
+// @Description Create a new income
+// @Produce json
+// @Tags Income
+// @Success 200 {object} CreateIncomeOutput
+// @Router /incomes [post]
 func (c *CreateIncome) Execute(input CreateIncomeInput) (CreateIncomeOutput, error) {
 	var income entity.Income
 	var find entity.Income

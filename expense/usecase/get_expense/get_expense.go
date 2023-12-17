@@ -11,6 +11,13 @@ type GetExpense struct {
 	Repository *gorm.DB
 }
 
+// Execute Get specific expense
+// @Summary Get specific expense
+// @Description Get specific expense
+// @Produce json
+// @Tags Expense
+// @Success 200 {object} GetExpenseOutput
+// @Router /expense/:id [get]
 func (c *GetExpense) Execute (input GetExpenseInput) (GetExpenseOutput, error) {
 	var expense entity.Expense
 	c.Repository.First(&expense, input.ID)

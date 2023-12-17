@@ -13,7 +13,12 @@ type ListIncomeByMonth struct {
 	Repository *gorm.DB
 }
 
-
+// Execute Get incomes by month
+// @Summary Get specific incomes by month
+// @Description Get specific incomes by month
+// @Tags Income
+// @Success 200 {object} ListIncomeByMonthOutput
+// @Router /incomes/:year/:month [get]
 func (c *ListIncomeByMonth) Execute(input ListIncomeByMonthInput) (ListIncomeByMonthOutput, error){
 	var incomes []entity.Income
 

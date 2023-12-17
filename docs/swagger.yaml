@@ -1,0 +1,321 @@
+definitions:
+  create_expense.CreateExpenseDtoOutput:
+    properties:
+      category:
+        $ref: '#/definitions/entity.Category'
+      createdAt:
+        type: string
+      date:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      value:
+        type: number
+    type: object
+  create_income.CreateIncomeOutput:
+    properties:
+      createdAt:
+        type: string
+      date:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      value:
+        type: number
+    type: object
+  delete_expense.DeleteExpenseOutput:
+    properties:
+      msg:
+        type: string
+    type: object
+  delete_income.DeleteIncomeOutput:
+    properties:
+      msg:
+        type: string
+    type: object
+  entity.Category:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      expenses:
+        items:
+          $ref: '#/definitions/entity.Expense'
+        type: array
+      id:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  entity.Expense:
+    properties:
+      categoryID:
+        type: integer
+      createdAt:
+        type: string
+      date:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      value:
+        type: number
+    type: object
+  entity.Income:
+    properties:
+      createdAt:
+        type: string
+      date:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      value:
+        type: number
+    type: object
+  get_expense.GetExpenseOutput:
+    properties:
+      createdAt:
+        type: string
+      date:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      value:
+        type: number
+    type: object
+  get_income.GetIncomeOutput:
+    properties:
+      createdAt:
+        type: string
+      date:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      value:
+        type: number
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  list_expense_by_month.ListExpenseByMonthOutput:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.Expense'
+        type: array
+    type: object
+  list_expenses.ListExpenseOutput:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.Expense'
+        type: array
+    type: object
+  list_income_by_month.ListIncomeByMonthOutput:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.Income'
+        type: array
+    type: object
+  list_incomes.ListIncomesOutput:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.Income'
+        type: array
+    type: object
+  month_resume.MonthResumeOutput:
+    properties:
+      balance:
+        type: number
+      total_each_category:
+        items:
+          $ref: '#/definitions/service.ExpensesByCategory'
+        type: array
+      total_expenses:
+        type: number
+      total_incomes:
+        type: number
+    type: object
+  service.ExpensesByCategory:
+    properties:
+      category:
+        type: string
+      value:
+        type: number
+    type: object
+host: localhost:5000
+info:
+  contact:
+    email: renanloub@protonmail.com
+    name: Renan Lourenço
+    url: https://github.com/RenanLourenco
+  description: App to organize all your financial life
+  title: Financial Organizer API
+  version: 1.0.0
+paths:
+  /expense/:id:
+    delete:
+      description: Delete specific expense
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/delete_expense.DeleteExpenseOutput'
+      summary: Delete specific expense
+      tags:
+      - Expense
+    get:
+      description: Get specific expense
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/get_expense.GetExpenseOutput'
+      summary: Get specific expense
+      tags:
+      - Expense
+  /expenses:
+    post:
+      description: Create a new expense
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/create_expense.CreateExpenseDtoOutput'
+      summary: Create a new expense
+      tags:
+      - Expense
+  /expenses/:id:
+    put:
+      responses: {}
+  /expenses/:year/:month:
+    get:
+      description: List expenses by month
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/list_expenses.ListExpenseOutput'
+      summary: List expenses by month
+      tags:
+      - Expense
+  /income/:id:
+    delete:
+      description: delete income
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/delete_income.DeleteIncomeOutput'
+      summary: delete income
+      tags:
+      - Income
+    get:
+      description: Get specific income by id
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/get_income.GetIncomeOutput'
+      summary: Get specific income by id
+      tags:
+      - Income
+  /incomes:
+    get:
+      description: List incomes
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/list_incomes.ListIncomesOutput'
+      summary: List incomes
+      tags:
+      - Income
+    post:
+      description: Create a new income
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/create_income.CreateIncomeOutput'
+      summary: Create a new income
+      tags:
+      - Income
+  /incomes/:year/:month:
+    get:
+      description: Get specific incomes by month
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/list_income_by_month.ListIncomeByMonthOutput'
+      summary: Get specific incomes by month
+      tags:
+      - Income
+  /resume/:year/:month:
+    get:
+      description: return a month resume about registered financial in month
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/month_resume.MonthResumeOutput'
+      summary: return a month resume about registered financial in month
+      tags:
+      - Resume
+swagger: "2.0"

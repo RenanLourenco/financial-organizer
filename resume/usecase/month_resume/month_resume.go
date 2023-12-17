@@ -11,6 +11,13 @@ type MonthResume struct {
 	Repository *gorm.DB
 }
 
+
+// Execute return a month resume about registered financial in month
+// @Summary return a month resume about registered financial in month
+// @Description return a month resume about registered financial in month
+// @Tags Resume
+// @Success 200 {object} MonthResumeOutput
+// @Router /resume/:year/:month [get]
 func (c *MonthResume) Execute(input MonthResumeInput) (MonthResumeOutput, error) {
 	var incomesValue float64
 	var expensesValue float64

@@ -10,7 +10,13 @@ type DeleteExpense struct {
 	Repository *gorm.DB
 }
 
-
+// Execute Delete specific expense
+// @Summary Delete specific expense
+// @Description Delete specific expense
+// @Produce json
+// @Tags Expense
+// @Success 200 {object} DeleteExpenseOutput
+// @Router /expense/:id [delete]
 func (c *DeleteExpense) Execute(input DeleteExpenseInput) (DeleteExpenseOutput, error) {
 	var expense entity.Expense
 

@@ -10,7 +10,13 @@ type ListExpense struct{
 }
 
 
-
+// Execute List expenses by month
+// @Summary List expenses by month
+// @Description List expenses by month
+// @Produce json
+// @Tags Expense
+// @Success 200 {object} ListExpenseOutput
+// @Router /expenses/:year/:month [get]
 func (c *ListExpense) Execute() (ListExpenseOutput, error) {
 	var expenses []entity.Expense
 

@@ -14,6 +14,13 @@ type CreateExpense struct {
 	CategoryService *category.CategoryService
 }
 
+// Execute Create a new expense
+// @Summary Create a new expense
+// @Description Create a new expense
+// @Produce json
+// @Tags Expense
+// @Success 200 {object} CreateExpenseDtoOutput
+// @Router /expenses [post]
 func (c *CreateExpense) Execute(input CreateExpenseDtoInput) (CreateExpenseDtoOutput, error){
 	var expense entity.Expense
 	var find entity.Expense

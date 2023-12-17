@@ -12,6 +12,15 @@ type UpdateExpense struct {
 	Repository *gorm.DB
 }
 
+
+// Execute Update specific expense month
+// @Summary Update specific expense month
+// @Description Update specific expense month
+// @Produce json
+// @Tags Expense
+// @Success 200 {object} func (c *UpdateExpense) Execute(input UpdateExpenseInput) (UpdateExpenseOutput, error) {
+
+// @Router /expenses/:id [put]
 func (c *UpdateExpense) Execute(input UpdateExpenseInput) (UpdateExpenseOutput, error) {
 	var expense entity.Expense
 	c.Repository.First(&expense, input.ID)
